@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # Pin to Ubuntu 24.04; do not auto-bump to a newer LTS major.
+      - dependency-name: ubuntu
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
