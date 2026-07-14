@@ -15,3 +15,7 @@ Listens on `3142/tcp`. Config `/etc/apt-cacher-ng`, cache
 
 See [docs/usage.md](docs/usage.md) for configuration, volumes, and the CI/publish
 pipeline.
+
+## License
+
+[Apache-2.0](LICENSE).
