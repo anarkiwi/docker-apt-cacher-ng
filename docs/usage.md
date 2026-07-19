@@ -2,10 +2,21 @@
 
 ## Image
 
-Built from `ubuntu:24.04` with the distribution `apt-cacher-ng` package plus its
-`SupportDir` mirror lists, so mounted configs using the stock `Remap-*` rules
-resolve out of the box. The service runs in the foreground as the unprivileged
-`apt-cacher-ng` user.
+Built from `ubuntu:24.04`. A build stage rebuilds the distribution
+`apt-cacher-ng` source package with `apt-cacher-ng.patch` (Tim Woodall's
+per-URL download serialization fix for the concurrency race,
+[Debian #1022043](https://bugs.debian.org/1022043) / Ubuntu #1983856 —
+unmerged upstream, acng is unmaintained); the runtime stage installs the
+resulting `.deb`. Without the patch, concurrent requests for the same volatile
+index file race on the cache temp file and leave a corrupt `InRelease` that
+fails GPG verification (`BADSIG`). The package's `SupportDir` mirror lists are
+retained, so mounted configs using the stock `Remap-*` rules resolve out of the
+box. The service runs in the foreground as the unprivileged `apt-cacher-ng`
+user.
+
+If a future Ubuntu `apt-cacher-ng` source no longer matches the patch context,
+the build fails at `quilt push` rather than silently shipping unpatched — bump
+or drop the patch then.
 
 Tags:
 
